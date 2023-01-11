@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 public class Basket {
     @Id
+    @Column(name="id_basket" , nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Date date;
@@ -17,7 +18,8 @@ public class Basket {
     @OneToOne
     @JoinColumn(name = "id_user")
     private User user;
-    @OneToMany(mappedBy = "basket", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "basket_product", joinColumns = @JoinColumn(name = "id_basket"), inverseJoinColumns = @JoinColumn(name = "id_product"))
     private List<Product> product = new ArrayList<>();
     private boolean is_deleted;
 

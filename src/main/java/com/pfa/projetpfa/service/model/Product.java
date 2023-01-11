@@ -2,7 +2,9 @@ package com.pfa.projetpfa.service.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="Product")
@@ -20,12 +22,12 @@ public class Product {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="id_category")
     private Category category;
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_basket")
-    private Basket basket;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToMany(mappedBy = "product")
+    @JoinColumn(name = "id_basket")
+    private List<Basket> basket = new ArrayList<>();
+    @ManyToMany(mappedBy = "product")
     @JoinColumn(name="id_order")
-    private Order order;
+    private List<Order> order = new ArrayList<>();
     @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Collection<Image> images;
 

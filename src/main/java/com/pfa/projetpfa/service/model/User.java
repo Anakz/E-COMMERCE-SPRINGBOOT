@@ -2,10 +2,14 @@ package com.pfa.projetpfa.service.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class User {
 
     @Id
+    //@Column(name="id_user" , nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String first_name;
@@ -20,9 +24,9 @@ public class User {
     @OneToOne
     @JoinColumn(name = "id_user")
     private Payment payment;
-    @OneToOne
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_order")
-    private Order order;
+    private List<Order> order = new ArrayList<>();
     @OneToOne
     @JoinColumn(name = "id_basket")
     private Basket basket;

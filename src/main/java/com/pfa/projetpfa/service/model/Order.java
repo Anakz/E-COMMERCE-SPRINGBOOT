@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 public class Order {
     @Id
+    //@Column(name="id_order" , nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Date ordered;
@@ -17,9 +18,10 @@ public class Order {
     private int quantity;
     private float delivery_price;
     private float total;
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "id_order"), inverseJoinColumns = @JoinColumn(name = "id_product"))
     private List<Product> product = new ArrayList<>();
-    @OneToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User user;
     @OneToOne
