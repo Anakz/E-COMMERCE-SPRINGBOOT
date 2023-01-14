@@ -1,70 +1,69 @@
 package com.pfa.projetpfa.service;
 
 import com.pfa.projetpfa.dao.UserRepository;
+import com.pfa.projetpfa.domaine.UserConverter;
+import com.pfa.projetpfa.domaine.UserVo;
 import com.pfa.projetpfa.service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UserService implements IUserService, CommandLineRunner {
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public List<User> getUsers(){
+    public List<UserVo> getUsers(){
         List<User> list = userRepository.findAll();
-        return list;
+        return UserConverter.toListVo(list);
     }
 
     @Override
-    public void save(User user){
-        userRepository.save(user);
+    public void save(UserVo user){
+
+        userRepository.save(UserConverter.toBo(user));
     }
 
     @Override
-    public User getUserById(Long id){
+    public UserVo getUserById(Long id){
         boolean foundUser = userRepository.existsById(id);
         if (!foundUser){
             return null;
         }
-        return userRepository.getOne(id);
+        return UserConverter.toVo(userRepository.getOne(id));
     }
 
     @Override
     public void delete(Long id){
+
         userRepository.deleteById(id);
     }
 
-    @Override
-    public List<User> findByCreditCard(String creditCard){
-        List<User> list = userRepository.findByCreditCard(creditCard);
-        return list;
-    }
 
     @Override
-    public List<User> findByRole(String role){
+    public List<UserVo> findByRole(String role){
         List<User> list = userRepository.findByRole(role);
-        return list;
+        return UserConverter.toListVo(list);
     }
 
     //Pour la pagination
     @Override
-    public List<User> findAll(int pageId, int size){
-        //Page<User> result = userRepository.findAll(PageRequest.of(pageId, size, Sort.Direction.ASC, "name"));
-        List<User> result = userRepository.findAll();
+    public List<UserVo> findAll(int pageId, int size){
+        Page<User> result = userRepository.findAll(PageRequest.of(pageId, size, Sort.Direction.ASC, "name"));
 
-        return result;
+        return UserConverter.toListVo(result.getContent());
     }
 
     //Pour le tri
     @Override
-    public List<User> sortBy(String fieldName){
+    public List<UserVo> sortBy(String fieldName){
 
-        return userRepository.findAll(Sort.by(fieldName));
+        return UserConverter.toListVo(userRepository.findAll(Sort.by(fieldName)));
     }
 
     @Override

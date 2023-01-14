@@ -1,21 +1,16 @@
-package com.pfa.projetpfa.service.model;
+package com.pfa.projetpfa.domaine;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import com.pfa.projetpfa.service.model.Basket;
+import com.pfa.projetpfa.service.model.Category;
+import com.pfa.projetpfa.service.model.Image;
+import com.pfa.projetpfa.service.model.Order;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name="Product")
-@JsonIgnoreProperties("hibernateLazyInitializer")
-public class Product {
-    @Id
-    //@Column(name="id_product" , nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductVo {
+
     private Long id;
     private String name;
     private String description;
@@ -24,25 +19,16 @@ public class Product {
     private int stock;
     private int stock_available;
     private float weight;
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JsonBackReference
-    //@JoinColumn(name="id_category")
     private Category category;
-
-    @ManyToMany(mappedBy = "product")
-    //@JoinColumn(name = "id_basket")
     private List<Basket> basket = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "product")
-    //@JoinColumn(name="id_order")
     private List<Order> order = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JsonBackReference
     private Collection<Image> images;
     private boolean is_deleted;
 
-    public Product(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, Collection<Image> images, boolean is_deleted) {
+    public ProductVo() {
+    }
+
+    public ProductVo(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, Collection<Image> images, boolean is_deleted) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -66,24 +52,13 @@ public class Product {
         this.name = name;
     }
 
-    public List<Basket> getBasket() {
-        return basket;
-    }
-
-    public void setBasket(List<Basket> basket) {
-        this.basket = basket;
-    }
-
-    public List<Order> getOrder() {
-        return order;
-    }
-
-    public void setOrder(List<Order> order) {
-        this.order = order;
-    }
-
-    public Product(){
-
+    @Override
+    public String toString() {
+        return "ProductVo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", is_deleted=" + is_deleted +
+                '}';
     }
 
     public Long getId() {
@@ -150,6 +125,22 @@ public class Product {
         this.category = category;
     }
 
+    public List<Basket> getBasket() {
+        return basket;
+    }
+
+    public void setBasket(List<Basket> basket) {
+        this.basket = basket;
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
+
     public Collection<Image> getImages() {
         return images;
     }
@@ -164,21 +155,5 @@ public class Product {
 
     public void setIs_deleted(boolean is_deleted) {
         this.is_deleted = is_deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", buying_price=" + buying_price +
-                ", selling_price=" + selling_price +
-                ", stock=" + stock +
-                ", stock_available=" + stock_available +
-                ", weight=" + weight +
-                ", category=" + category +
-                ", images=" + images +
-                ", is_deleted=" + is_deleted +
-                '}';
     }
 }

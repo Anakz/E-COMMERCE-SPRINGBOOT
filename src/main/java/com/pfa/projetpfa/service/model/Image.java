@@ -1,15 +1,17 @@
 package com.pfa.projetpfa.service.model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 @Entity
 @Table(name="Image")
 public class Image {
     @Id
-    @Column(name = "id_image", nullable = false)
+    //@Column(name = "id_image", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String img;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_product")
+    @JsonManagedReference
     private Product product;
     private boolean is_deleted;
 

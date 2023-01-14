@@ -7,17 +7,18 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "Orderr")
 public class Order {
     @Id
-    //@Column(name="id_order" , nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Date ordered;
-    private Date shipped;
+    private String ordered;
+    private String shipped;
     private String status;
     private int quantity;
     private float delivery_price;
     private float total;
+    private boolean is_deleted;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "id_order"), inverseJoinColumns = @JoinColumn(name = "id_product"))
     private List<Product> product = new ArrayList<>();
@@ -30,12 +31,11 @@ public class Order {
     @OneToOne
     @JoinColumn(name = "id_delivery")
     private Delivery delivery;
-    private boolean is_deleted;
 
     public Order() {
     }
 
-    public Order(long id, Date ordered, Date shipped, String status, int quantity, float delivery_price, float total, List<Product> product, User user, boolean is_deleted) {
+    public Order(long id, String ordered, String shipped, String status, int quantity, float delivery_price, float total, List<Product> product, User user, Bill bill, Delivery delivery, boolean is_deleted) {
         this.id = id;
         this.ordered = ordered;
         this.shipped = shipped;
@@ -45,6 +45,8 @@ public class Order {
         this.total = total;
         this.product = product;
         this.user = user;
+        this.bill = bill;
+        this.delivery = delivery;
         this.is_deleted = is_deleted;
     }
 
@@ -56,19 +58,19 @@ public class Order {
         this.id = id;
     }
 
-    public Date getOrdered() {
+    public String getOrdered() {
         return ordered;
     }
 
-    public void setOrdered(Date ordered) {
+    public void setOrdered(String ordered) {
         this.ordered = ordered;
     }
 
-    public Date getShipped() {
+    public String getShipped() {
         return shipped;
     }
 
-    public void setShipped(Date shipped) {
+    public void setShipped(String shipped) {
         this.shipped = shipped;
     }
 
@@ -120,11 +122,45 @@ public class Order {
         this.user = user;
     }
 
+    public Bill getBill() {
+        return bill;
+    }
+
+    public void setBill(Bill bill) {
+        this.bill = bill;
+    }
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
     public boolean isIs_deleted() {
         return is_deleted;
     }
 
     public void setIs_deleted(boolean is_deleted) {
         this.is_deleted = is_deleted;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", ordered=" + ordered +
+                ", shipped=" + shipped +
+                ", status='" + status + '\'' +
+                ", quantity=" + quantity +
+                ", delivery_price=" + delivery_price +
+                ", total=" + total +
+                ", product=" + product +
+                ", user=" + user +
+                ", bill=" + bill +
+                ", delivery=" + delivery +
+                ", is_deleted=" + is_deleted +
+                '}';
     }
 }

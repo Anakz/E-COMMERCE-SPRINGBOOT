@@ -7,12 +7,12 @@ import java.util.Collection;
 @Table(name="Bill")
 public class Bill {
     @Id
-    @Column(name="id_bill" , nullable = false)
+    //@Column(name="id_bill" , nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private float total_price;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JoinColumn(name = "id_order")
     private Order order;
     private boolean is_deleted;
 

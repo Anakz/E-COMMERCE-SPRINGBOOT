@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class Basket {
     @Id
-    @Column(name="id_basket" , nullable = false)
+    //@Column(name="id_basket" , nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Date date;
@@ -19,7 +19,7 @@ public class Basket {
     @JoinColumn(name = "id_user")
     private User user;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "basket_product", joinColumns = @JoinColumn(name = "id_basket"), inverseJoinColumns = @JoinColumn(name = "id_product"))
+    //@JoinTable(name = "basket_product", joinColumns = @JoinColumn(name = "id_basket"), inverseJoinColumns = @JoinColumn(name = "id_product"))
     private List<Product> product = new ArrayList<>();
     private boolean is_deleted;
 

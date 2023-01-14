@@ -25,11 +25,27 @@ public class User {
     @JoinColumn(name = "id_user")
     private Payment payment;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_order")
+    //@JoinColumn(name = "id_order")
     private List<Order> order = new ArrayList<>();
     @OneToOne
     @JoinColumn(name = "id_basket")
     private Basket basket;
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
+
+    public Basket getBasket() {
+        return basket;
+    }
+
+    public void setBasket(Basket basket) {
+        this.basket = basket;
+    }
 
     public Payment getPayment() {
         return payment;

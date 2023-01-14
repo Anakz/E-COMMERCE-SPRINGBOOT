@@ -1,30 +1,24 @@
-package com.pfa.projetpfa.service.model;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+package com.pfa.projetpfa.domaine;
+
+import com.pfa.projetpfa.service.model.Product;
 
 import java.util.Collection;
 
-@Entity
-public class Category {
-    @Id
-    //@Column(name="id_category" , nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CategoryVo {
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "category" , fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JsonManagedReference
     private Collection<Product> products;
     private boolean is_deleted;
 
-    public Category(Long id, String name, Collection<Product> products, boolean is_deleted) {
+    public CategoryVo(){
+        super();
+    }
+
+    public CategoryVo(Long id, String name, Collection<Product> products, boolean is_deleted) {
         this.id = id;
         this.name = name;
         this.products = products;
         this.is_deleted = is_deleted;
-    }
-    public Category(){
-
     }
 
     public Long getId() {
@@ -57,15 +51,5 @@ public class Category {
 
     public void setIs_deleted(boolean is_deleted) {
         this.is_deleted = is_deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", products=" + products +
-                ", is_deleted=" + is_deleted +
-                '}';
     }
 }

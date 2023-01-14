@@ -1,25 +1,25 @@
 package com.pfa.projetpfa.service;
 
+import com.pfa.projetpfa.domaine.UserVo;
 import com.pfa.projetpfa.service.model.User;
 
 import java.util.List;
 
 public interface IUserService {
 
-    List<User> getUsers();
+    List<UserVo> getUsers();
 
-    void save(User user);
+    void save(UserVo user);
 
-    User getUserById(Long id);
+    UserVo getUserById(Long id);
 
     void delete(Long id);
 
-    List<User> findByCreditCard(String creditCard);
 
-    List<User> findByRole(String role);
+    List<UserVo> findByRole(String role);
 
     //Pour la pagination
-    List<User> findAll(int pageId, int size);
+    List<UserVo> findAll(int pageId, int size);
     //Pour le tri
-    List<User> sortBy(String fieldName);
+    List<UserVo> sortBy(String fieldName);
 }
