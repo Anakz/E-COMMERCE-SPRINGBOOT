@@ -22,13 +22,13 @@ public class ProductVo {
     private Category category;
     private List<Basket> basket = new ArrayList<>();
     private List<Order> order = new ArrayList<>();
-    private Collection<Image> images;
+    private List<Image> images;
     private boolean is_deleted;
 
     public ProductVo() {
     }
 
-    public ProductVo(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, Collection<Image> images, boolean is_deleted) {
+    public ProductVo(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, List<Image> images, boolean is_deleted) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -42,6 +42,22 @@ public class ProductVo {
         this.order = order;
         this.images = images;
         this.is_deleted = is_deleted;
+    }
+
+    public ProductVo(ProductVo createdProduct) {
+        this.id = createdProduct.id;
+        this.name = createdProduct.name;
+        this.description = createdProduct.description;
+        this.buying_price = createdProduct.buying_price;
+        this.selling_price = createdProduct.selling_price;
+        this.stock = createdProduct.stock;
+        this.stock_available = createdProduct.stock_available;
+        this.weight = createdProduct.weight;
+        this.category = createdProduct.category;
+        this.basket = createdProduct.basket;
+        this.order = createdProduct.order;
+        this.images = createdProduct.images;
+        this.is_deleted = createdProduct.is_deleted;
     }
 
     public String getName() {
@@ -141,11 +157,11 @@ public class ProductVo {
         this.order = order;
     }
 
-    public Collection<Image> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(Collection<Image> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 

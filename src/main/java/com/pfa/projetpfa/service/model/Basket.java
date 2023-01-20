@@ -1,5 +1,8 @@
 package com.pfa.projetpfa.service.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -7,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties("hibernateLazyInitializer")
 public class Basket {
     @Id
     //@Column(name="id_basket" , nullable = false)
@@ -17,10 +21,13 @@ public class Basket {
     private float total_price;
     @OneToOne
     @JoinColumn(name = "id_user")
+    @JsonBackReference(value = "user-basket")
     private User user;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     //@JoinTable(name = "basket_product", joinColumns = @JoinColumn(name = "id_basket"), inverseJoinColumns = @JoinColumn(name = "id_product"))
-    private List<Product> product = new ArrayList<>();
+        //@JsonManagedReference(value = "basket-product")
+    //@JsonBackReference
+    private List<Product> product = new ArrayList<Product>();
     private boolean is_deleted;
 
 

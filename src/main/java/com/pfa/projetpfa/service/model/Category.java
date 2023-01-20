@@ -12,8 +12,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "category" , fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "category" , fetch = FetchType.EAGER)
+    @JsonManagedReference(value = "product-category")
     private Collection<Product> products;
     private boolean is_deleted;
 

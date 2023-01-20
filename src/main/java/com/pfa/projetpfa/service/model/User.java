@@ -1,11 +1,14 @@
 package com.pfa.projetpfa.service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties("hibernateLazyInitializer")
 public class User {
 
     @Id
@@ -29,6 +32,7 @@ public class User {
     private List<Order> order = new ArrayList<>();
     @OneToOne
     @JoinColumn(name = "id_basket")
+    @JsonManagedReference(value = "user-basket")
     private Basket basket;
 
     public List<Order> getOrder() {

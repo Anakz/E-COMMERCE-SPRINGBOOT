@@ -30,7 +30,13 @@ public class CategoryService implements ICategoryService, CommandLineRunner {
         boolean found = categoryRepository.existsById(id);
         if (!found)
             return null;
-        return CategoryConverter.toVo(categoryRepository.getOne(id));    }
+        return CategoryConverter.toVo(categoryRepository.getOne(id));
+    }
+    @Override
+    public List<CategoryVo> getCategoryByName(String categoryVoName) {
+        List<Category> list = categoryRepository.findByName(categoryVoName);
+        return CategoryConverter.toListVo(list);
+    }
 
     @Override
     public void delete(Long id) {
@@ -42,6 +48,8 @@ public class CategoryService implements ICategoryService, CommandLineRunner {
         List<Category> list = categoryRepository.findByName(name);
         return CategoryConverter.toListVo(list);
     }
+
+
 
     @Override
     public void run(String... args) throws Exception {

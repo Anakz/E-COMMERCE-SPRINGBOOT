@@ -5,9 +5,11 @@ import com.pfa.projetpfa.domaine.BasketVo;
 import com.pfa.projetpfa.domaine.UserVo;
 import com.pfa.projetpfa.service.BasketService;
 import com.pfa.projetpfa.service.IBasketService;
+import com.pfa.projetpfa.service.model.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,19 +26,27 @@ public class BasketController {
         return service.getBaskets();
     }
     @GetMapping(value = "/api/basket/{id}")
-    public ResponseEntity<Object> getUserById(@PathVariable(value = "id") Long basketVoId) {
+    public ResponseEntity<Object> getBasketById(@PathVariable(value = "id") Long basketVoId) {
         BasketVo basketVoFound = service.getBasketById(basketVoId);
         if (basketVoFound == null)
-            return new ResponseEntity<>("user doesn't exist", HttpStatus.OK);
+            return new ResponseEntity<>("Basket doesn't exist", HttpStatus.OK);
         return new ResponseEntity<>(basketVoFound, HttpStatus.OK);
     }
-    @PostMapping(value = "/api/basket")
-    public ResponseEntity<Object> createUser(@Valid @RequestBody BasketVo basketVo){
+    @GetMapping(value = "/api/basket/user/{user}")
+    public ResponseEntity<Object> getBasketByUser(@PathVariable(value = "user") User user) {
+        BasketVo basketVoFound = service.getBasketByUser(user);
+        if (basketVoFound == null)
+            return new ResponseEntity<>("Basket doesn't exist", HttpStatus.OK);
+        return new ResponseEntity<>(basketVoFound, HttpStatus.OK);
+    }
+    @PostMapping(value = "/api/basket", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> createBasket(@RequestBody BasketVo basketVo){
         service.save(basketVo);
-        return new ResponseEntity<>("basket is created successfully", HttpStatus.CREATED);
+        BasketVo savedBasket = service.findLastCreated();
+        return new ResponseEntity<>(savedBasket, HttpStatus.CREATED);
     }
     @PutMapping(value = "/api/basket/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable(name = "id") Long basketVoId, @RequestBody BasketVo basketVo){
+    public ResponseEntity<Object> updateBasket(@PathVariable(name = "id") Long basketVoId, @RequestBody BasketVo basketVo){
         BasketVo basketVoFound = service.getBasketById(basketVoId);
         if (basketVoFound == null)
             return new ResponseEntity<>("basket doesn't exist", HttpStatus.OK);

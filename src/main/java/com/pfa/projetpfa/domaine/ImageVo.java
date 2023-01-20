@@ -1,29 +1,21 @@
-package com.pfa.projetpfa.service.model;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
-@Entity
-@Table(name="Image")
-public class Image {
-    @Id
-    //@Column(name = "id_image", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+package com.pfa.projetpfa.domaine;
+
+import com.pfa.projetpfa.service.model.Product;
+
+public class ImageVo {
     private Long id;
     private String img;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_product")
-    @JsonBackReference(value = "product-image")
     private Product product;
     private boolean is_deleted;
 
-    public Image(Long id, String img, Product product, boolean is_deleted) {
+    public ImageVo() {
+    }
+
+    public ImageVo(Long id, String img, Product product, boolean is_deleted) {
         this.id = id;
         this.img = img;
         this.product = product;
         this.is_deleted = is_deleted;
-    }
-
-    public Image() {
-
     }
 
     public Long getId() {
@@ -56,15 +48,5 @@ public class Image {
 
     public void setIs_deleted(boolean is_deleted) {
         this.is_deleted = is_deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "Image{" +
-                "id=" + id +
-                ", img='" + img + '\'' +
-                ", product=" + product +
-                ", is_deleted=" + is_deleted +
-                '}';
     }
 }

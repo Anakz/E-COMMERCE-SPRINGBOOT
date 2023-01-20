@@ -21,13 +21,16 @@ public class ProductService implements IProductService, CommandLineRunner {
     private ProductRepository productRepository;
     @Override
     public List<ProductVo> getProducts() {
-        List<Product> list = productRepository.findAll();
+        //List<Product> list = productRepository.findAll();
+        List<Product> list = productRepository.findByIsDeletedFalse();
         return ProductConverter.toListVo(list);
     }
 
     @Override
-    public void save(ProductVo product) {
-        productRepository.save(ProductConverter.toBo(product));
+    public ProductVo save(ProductVo product) {
+        Product createdBo = productRepository.save(ProductConverter.toBo(product));
+        ProductVo createdVo =  ProductConverter.toVo(createdBo);
+        return createdVo;
     }
 
     @Override

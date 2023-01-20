@@ -28,8 +28,15 @@ public class CategoryController {
             return new ResponseEntity<>("product doesn't exist", HttpStatus.OK);
         return new ResponseEntity<>(categoryVoFound, HttpStatus.OK);
     }
-    @GetMapping(value = "/api/categorybyname/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/category/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getCategoryByName(@PathVariable(value = "name") String categoryVoName){
+        List<CategoryVo> categoryVoFound = service.getCategoryByName(categoryVoName);
+        if (categoryVoFound == null)
+            return new ResponseEntity<>("product doesn't exist", HttpStatus.OK);
+        return new ResponseEntity<>(categoryVoFound, HttpStatus.OK);
+    }
+    /*@GetMapping(value = "/api/categorybyname/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CategoryVo> getCategoryByName(@PathVariable(value = "name") String categoryVoName){
         return service.findByName(categoryVoName);
-    }
+    }*/
 }

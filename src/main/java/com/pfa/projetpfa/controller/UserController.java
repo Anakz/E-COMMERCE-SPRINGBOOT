@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class UserController {
 
@@ -36,7 +38,7 @@ public class UserController {
     }
 
     // To modify a user by his ID
-    @PutMapping(value = "/api/{id}")
+    @PutMapping(value = "/api/user/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable(name = "id") Long userVoId, @RequestBody UserVo userVo){
         UserVo userVoFound = service.getUserById(userVoId);
         if (userVoFound == null)

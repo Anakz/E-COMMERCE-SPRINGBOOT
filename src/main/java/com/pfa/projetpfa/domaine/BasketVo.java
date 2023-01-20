@@ -12,7 +12,7 @@ public class BasketVo {
     private int quantity;
     private float total_price;
     private User user;
-    private List<Product> product = new ArrayList<>();
+    private List<Product> product = new ArrayList<Product>();
     private boolean is_deleted;
     public BasketVo(){
         super();

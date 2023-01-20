@@ -24,13 +24,14 @@ public class Product {
     private int stock;
     private int stock_available;
     private float weight;
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JsonBackReference
+    @ManyToOne
+    @JsonBackReference(value = "product-category")
     //@JoinColumn(name="id_category")
     private Category category;
 
-    @ManyToMany(mappedBy = "product")
+    @ManyToMany(mappedBy = "product", fetch = FetchType.EAGER)
     //@JoinColumn(name = "id_basket")
+    @JsonBackReference(value = "basket-product")
     private List<Basket> basket = new ArrayList<>();
 
     @ManyToMany(mappedBy = "product")
@@ -38,11 +39,13 @@ public class Product {
     private List<Order> order = new ArrayList<>();
 
     @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JsonBackReference
-    private Collection<Image> images;
-    private boolean is_deleted;
+    @JsonManagedReference(value = "product-image")
+    private List<Image> images;
 
-    public Product(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, Collection<Image> images, boolean is_deleted) {
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
+    public Product(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, List<Image> images, boolean is_deleted) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -55,7 +58,7 @@ public class Product {
         this.basket = basket;
         this.order = order;
         this.images = images;
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
 
     public String getName() {
@@ -150,20 +153,20 @@ public class Product {
         this.category = category;
     }
 
-    public Collection<Image> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(Collection<Image> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 
     public boolean getIs_deleted() {
-        return is_deleted;
+        return isDeleted;
     }
 
     public void setIs_deleted(boolean is_deleted) {
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
 
     @Override
@@ -178,7 +181,7 @@ public class Product {
                 ", weight=" + weight +
                 ", category=" + category +
                 ", images=" + images +
-                ", is_deleted=" + is_deleted +
+                ", is_deleted=" + isDeleted +
                 '}';
     }
 }
