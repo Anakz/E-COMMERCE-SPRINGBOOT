@@ -1,30 +1,24 @@
-package com.pfa.projetpfa.service.model;
+package com.pfa.projetpfa.domaine;
 
-import jakarta.persistence.*;
-
+import com.pfa.projetpfa.service.model.User;
 import java.util.Date;
 
-@Entity
-public class Payment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PaymentVo {
     private long id;
     private Date paid_date;
     private float amount;
-    @OneToOne
-    @JoinColumn(name = "id_user")
     private User user;
-    private boolean isDeleted;
+    private boolean is_deleted;
 
-    public Payment() {
+    public PaymentVo() {
     }
 
-    public Payment(long id, Date paid_date, float amount, User user, boolean isDeleted) {
+    public PaymentVo(long id, Date paid_date, float amount, User user, boolean is_deleted) {
         this.id = id;
         this.paid_date = paid_date;
         this.amount = amount;
         this.user = user;
-        this.isDeleted = isDeleted;
+        this.is_deleted = is_deleted;
     }
 
     public long getId() {
@@ -59,11 +53,11 @@ public class Payment {
         this.user = user;
     }
 
-    public boolean getIsDeleted() {
-        return isDeleted;
+    public boolean getIs_deleted() {
+        return is_deleted;
     }
 
-    public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setIs_deleted(boolean is_deleted) {
+        this.is_deleted = is_deleted;
     }
 }

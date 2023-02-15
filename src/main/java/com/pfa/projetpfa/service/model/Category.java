@@ -15,13 +15,13 @@ public class Category {
     @OneToMany(mappedBy = "category" , fetch = FetchType.EAGER)
     @JsonManagedReference(value = "product-category")
     private Collection<Product> products;
-    private boolean is_deleted;
+    private boolean isDeleted;
 
     public Category(Long id, String name, Collection<Product> products, boolean is_deleted) {
         this.id = id;
         this.name = name;
         this.products = products;
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
     public Category(){
 
@@ -52,11 +52,11 @@ public class Category {
     }
 
     public boolean isIs_deleted() {
-        return is_deleted;
+        return isDeleted;
     }
 
     public void setIs_deleted(boolean is_deleted) {
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class Category {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", products=" + products +
-                ", is_deleted=" + is_deleted +
+                ", is_deleted=" + isDeleted +
                 '}';
     }
 }

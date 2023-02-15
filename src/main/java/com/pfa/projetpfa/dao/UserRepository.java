@@ -9,4 +9,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     List<User> findByRole(String role);
+    User findByEmail(String email);
+    boolean existsByEmail(String email);
+
+    User findByEmailAndPassword(String email, String password);
+
+    User findFirstByOrderByIdDesc();
+
+    boolean existsByEmailAndPassword(String email, String password);
+
+    List<User> findByIsDeletedFalse();
 }

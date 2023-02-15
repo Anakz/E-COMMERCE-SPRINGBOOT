@@ -1,16 +1,14 @@
-package com.pfa.projetpfa.service.model;
+package com.pfa.projetpfa.domaine;
 
-import jakarta.persistence.*;
+import com.pfa.projetpfa.service.model.Bill;
+import com.pfa.projetpfa.service.model.Delivery;
+import com.pfa.projetpfa.service.model.Product;
+import com.pfa.projetpfa.service.model.User;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "Orderr")
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OrderVo {
     private long id;
     private String ordered;
     private String shipped;
@@ -18,24 +16,16 @@ public class Order {
     private int quantity;
     private float delivery_price;
     private float total;
-    private boolean isDeleted;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "id_order"), inverseJoinColumns = @JoinColumn(name = "id_product"))
+    private boolean is_deleted;
     private List<Product> product = new ArrayList<>();
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "id_user")
     private User user;
-    @OneToOne
-    @JoinColumn(name = "id_bill")
     private Bill bill;
-    @OneToOne
-    @JoinColumn(name = "id_delivery")
     private Delivery delivery;
 
-    public Order() {
+    public OrderVo() {
     }
 
-    public Order(long id, String ordered, String shipped, String status, int quantity, float delivery_price, float total, List<Product> product, User user, Bill bill, Delivery delivery, boolean is_deleted) {
+    public OrderVo(long id, String ordered, String shipped, String status, int quantity, float delivery_price, float total, boolean is_deleted, List<Product> product, User user, Bill bill, Delivery delivery) {
         this.id = id;
         this.ordered = ordered;
         this.shipped = shipped;
@@ -43,11 +33,11 @@ public class Order {
         this.quantity = quantity;
         this.delivery_price = delivery_price;
         this.total = total;
+        this.is_deleted = is_deleted;
         this.product = product;
         this.user = user;
         this.bill = bill;
         this.delivery = delivery;
-        this.isDeleted = is_deleted;
     }
 
     public long getId() {
@@ -106,6 +96,14 @@ public class Order {
         this.total = total;
     }
 
+    public boolean isIs_deleted() {
+        return is_deleted;
+    }
+
+    public void setIs_deleted(boolean is_deleted) {
+        this.is_deleted = is_deleted;
+    }
+
     public List<Product> getProduct() {
         return product;
     }
@@ -136,31 +134,5 @@ public class Order {
 
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
-    }
-
-    public boolean isIs_deleted() {
-        return isDeleted;
-    }
-
-    public void setIs_deleted(boolean is_deleted) {
-        this.isDeleted = is_deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", ordered=" + ordered +
-                ", shipped=" + shipped +
-                ", status='" + status + '\'' +
-                ", quantity=" + quantity +
-                ", delivery_price=" + delivery_price +
-                ", total=" + total +
-                ", product=" + product +
-                ", user=" + user +
-                ", bill=" + bill +
-                ", delivery=" + delivery +
-                ", is_deleted=" + isDeleted +
-                '}';
     }
 }

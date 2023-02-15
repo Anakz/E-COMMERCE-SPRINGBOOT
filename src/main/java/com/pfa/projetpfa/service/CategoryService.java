@@ -16,7 +16,8 @@ public class CategoryService implements ICategoryService, CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Override
     public List<CategoryVo> getCategories() {
-        List<Category> list = categoryRepository.findAll();
+        //List<Category> list = categoryRepository.findAll();
+        List<Category> list = categoryRepository.findByIsDeletedFalse();
         return CategoryConverter.toListVo(list);
     }
 

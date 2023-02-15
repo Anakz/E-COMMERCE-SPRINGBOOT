@@ -14,13 +14,13 @@ public class Bill {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_order")
     private Order order;
-    private boolean is_deleted;
+    private boolean isDeleted;
 
     public Bill(Long id, float total_price, Order order, boolean is_deleted) {
         this.id = id;
         this.total_price = total_price;
         this.order = order;
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
     public Bill(){
 
@@ -51,11 +51,11 @@ public class Bill {
     }
 
     public boolean isIs_deleted() {
-        return is_deleted;
+        return isDeleted;
     }
 
     public void setIs_deleted(boolean is_deleted) {
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Bill {
                 "id=" + id +
                 ", total_price=" + total_price +
                 ", order=" + order +
-                ", is_deleted=" + is_deleted +
+                ", is_deleted=" + isDeleted +
                 '}';
     }
 }

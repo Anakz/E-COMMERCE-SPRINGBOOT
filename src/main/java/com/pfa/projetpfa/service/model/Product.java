@@ -24,6 +24,10 @@ public class Product {
     private int stock;
     private int stock_available;
     private float weight;
+    @Column(columnDefinition = "integer default 0")
+    private int selected_quantity;
+    /*@Column(columnDefinition = "integer default 0")
+    private int fournisseur_id;*/
     @ManyToOne
     @JsonBackReference(value = "product-category")
     //@JoinColumn(name="id_category")
@@ -45,7 +49,7 @@ public class Product {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    public Product(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, List<Image> images, boolean is_deleted) {
+    public Product(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, int selected_quantity, Category category, List<Basket> basket, List<Order> order, List<Image> images, boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -54,11 +58,12 @@ public class Product {
         this.stock = stock;
         this.stock_available = stock_available;
         this.weight = weight;
+        this.selected_quantity = selected_quantity;
         this.category = category;
         this.basket = basket;
         this.order = order;
         this.images = images;
-        this.isDeleted = is_deleted;
+        this.isDeleted = isDeleted;
     }
 
     public String getName() {
@@ -83,6 +88,14 @@ public class Product {
 
     public void setOrder(List<Order> order) {
         this.order = order;
+    }
+
+    public int getSelected_quantity() {
+        return selected_quantity;
+    }
+
+    public void setSelected_quantity(int selected_quantity) {
+        this.selected_quantity = selected_quantity;
     }
 
     public Product(){

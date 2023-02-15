@@ -1,30 +1,25 @@
-package com.pfa.projetpfa.service.model;
+package com.pfa.projetpfa.domaine;
 
-import jakarta.persistence.*;
+import com.pfa.projetpfa.service.model.Order;
 
 import java.util.Date;
 
-@Entity
-public class Delivery {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DeliveryVo {
     private long id;
     private Date start_date;
     private Date arrived_date;
-    @OneToOne
-    @JoinColumn(name = "id_order")
     private Order order;
-    private boolean isDeleted;
+    private boolean is_deleted;
 
-    public Delivery() {
+    public DeliveryVo() {
     }
 
-    public Delivery(long id, Date start_date, Date arrived_date, Order order, boolean is_deleted) {
+    public DeliveryVo(long id, Date start_date, Date arrived_date, Order order, boolean is_deleted) {
         this.id = id;
         this.start_date = start_date;
         this.arrived_date = arrived_date;
         this.order = order;
-        this.isDeleted = is_deleted;
+        this.is_deleted = is_deleted;
     }
 
     public long getId() {
@@ -59,11 +54,11 @@ public class Delivery {
         this.order = order;
     }
 
-    public boolean getIs_deleted() {
-        return isDeleted;
+    public boolean isIs_deleted() {
+        return is_deleted;
     }
 
     public void setIs_deleted(boolean is_deleted) {
-        this.isDeleted = is_deleted;
+        this.is_deleted = is_deleted;
     }
 }

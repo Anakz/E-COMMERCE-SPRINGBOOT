@@ -23,12 +23,13 @@ public class ProductVo {
     private List<Basket> basket = new ArrayList<>();
     private List<Order> order = new ArrayList<>();
     private List<Image> images;
+    private int selected_quantity;
     private boolean is_deleted;
 
     public ProductVo() {
     }
 
-    public ProductVo(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, List<Image> images, boolean is_deleted) {
+    public ProductVo(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, List<Image> images, int selected_quantity, boolean is_deleted) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -41,7 +42,16 @@ public class ProductVo {
         this.basket = basket;
         this.order = order;
         this.images = images;
+        this.selected_quantity = selected_quantity;
         this.is_deleted = is_deleted;
+    }
+
+    public int getSelected_quantity() {
+        return selected_quantity;
+    }
+
+    public void setSelected_quantity(int selected_quantity) {
+        this.selected_quantity = selected_quantity;
     }
 
     public ProductVo(ProductVo createdProduct) {
@@ -172,4 +182,5 @@ public class ProductVo {
     public void setIs_deleted(boolean is_deleted) {
         this.is_deleted = is_deleted;
     }
+
 }

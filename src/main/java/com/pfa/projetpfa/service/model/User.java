@@ -23,7 +23,7 @@ public class User {
     private String email;
     private String password;
     private String role;
-    private boolean is_deleted;
+    private boolean isDeleted;
     @OneToOne
     @JoinColumn(name = "id_user")
     private Payment payment;
@@ -72,7 +72,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
 
     public void setId(long id) {
@@ -112,7 +112,7 @@ public class User {
     }
 
     public void setIs_deleted(boolean is_deleted) {
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
 
     public long getId() {
@@ -152,7 +152,7 @@ public class User {
     }
 
     public boolean isIs_deleted() {
-        return is_deleted;
+        return isDeleted;
     }
 
     @Override
@@ -161,7 +161,7 @@ public class User {
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", role='" + role + '\'' +
-                ", is_deleted=" + is_deleted +
+                ", is_deleted=" + isDeleted +
                 '}';
     }
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 @RestController
 public class ProductController {
 
@@ -44,15 +44,24 @@ public class ProductController {
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/api/product/delete/{id}")
+    @PutMapping(value = "/api/product/{id}")
     public ResponseEntity<Object> updateProduct(@PathVariable(name = "id") Long productVoId, @RequestBody ProductVo productVo) {
         ProductVo productVoFound = service.getProductById(productVoId);
         if (productVoFound == null)
             return new ResponseEntity<>("Product doesn't exist", HttpStatus.OK);
-        //productVo.setId(productVoId);
+        productVo.setId(productVoId);
+        service.save(productVo);
+        return new ResponseEntity<>("Product updated successfully", HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/api/product/delete/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable(name = "id") Long productVoId, @RequestBody ProductVo productVo) {
+        ProductVo productVoFound = service.getProductById(productVoId);
+        if (productVoFound == null)
+            return new ResponseEntity<>("Product doesn't exist", HttpStatus.OK);
         productVoFound.setIs_deleted(true);
         service.save(productVoFound);
-        return new ResponseEntity<>("Product is updated successsfully", HttpStatus.OK);
+        return new ResponseEntity<>("Product is deleted successfully", HttpStatus.OK);
     }
 
 
