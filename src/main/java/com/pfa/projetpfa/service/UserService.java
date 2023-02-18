@@ -9,12 +9,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.List;
 @Service
 @Transactional
-public class UserService implements IUserService, CommandLineRunner {
+public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository;
 
@@ -115,7 +115,7 @@ public class UserService implements IUserService, CommandLineRunner {
 
         return UserConverter.toListVo(userRepository.findAll(Sort.by(fieldName)));
     }
-
+/*
     @Override
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -128,14 +128,14 @@ public class UserService implements IUserService, CommandLineRunner {
                 user.getEmail(), user.getPassword(), enable, accountNonExpired,
                 credentialsNonExpired, accountNonLocked, authorities
                 );
-    }
+    }/*
 
 
     @Override
     public void run(String... args) throws Exception {
         System.out.print("This is a UserService.java in the run methode");
     }
-
+    /*
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -148,5 +148,5 @@ public class UserService implements IUserService, CommandLineRunner {
                 user.getEmail(), user.getPassword(), enable, accountNonExpired,
                 credentialsNonExpired, accountNonLocked, authorities
         );
-    }
+    }*/
 }

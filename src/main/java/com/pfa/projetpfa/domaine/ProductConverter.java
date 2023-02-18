@@ -23,6 +23,8 @@ public class ProductConverter {
         vo.setOrder(bo.getOrder());
         vo.setImages(bo.getImages());
         vo.setIs_deleted(bo.getIs_deleted());
+        vo.setFournisseur(bo.getFournisseur());
+        vo.setSelected_quantity(bo.getSelected_quantity());
         return vo;
     }
     public static Product toBo(ProductVo vo){
@@ -41,7 +43,8 @@ public class ProductConverter {
         bo.setOrder(vo.getOrder());
         bo.setImages(vo.getImages());
         bo.setIs_deleted(vo.getIs_deleted());
-
+        bo.setFournisseur(vo.getFournisseur());
+        bo.setSelected_quantity(vo.getSelected_quantity());
         return bo;
     }
     public static List<ProductVo> toListVo(List<Product> listBo){

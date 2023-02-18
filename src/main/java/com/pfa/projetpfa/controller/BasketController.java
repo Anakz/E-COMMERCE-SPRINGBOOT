@@ -6,6 +6,7 @@ import com.pfa.projetpfa.service.BasketService;
 import com.pfa.projetpfa.service.IBasketService;
 import com.pfa.projetpfa.service.IProductService;
 import com.pfa.projetpfa.service.IUserService;
+import com.pfa.projetpfa.service.model.Basket;
 import com.pfa.projetpfa.service.model.Product;
 import com.pfa.projetpfa.service.model.User;
 import jakarta.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins= {"*"})
@@ -28,7 +30,7 @@ public class BasketController {
     @Autowired
     private IUserService serviceUser;
 
-    @GetMapping("/api/basket")
+    @GetMapping(value ="/api/basket", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BasketVo> getBaskets(){
         return service.getBaskets();
     }
@@ -64,27 +66,50 @@ public class BasketController {
         if (basketVoFound == null)
             return new ResponseEntity<>("basket doesn't exist", HttpStatus.OK);
         ProductVo product_to_add = serviceProduct.getProductById(productVoId);
-        List<Product> list = basketVoFound.getProduct();
+        List<Product> list = new ArrayList<>(basketVoFound.getProduct());
         list.add(ProductConverter.toBo(product_to_add));
+
+        for (Product product : list) {
+            if (product.getId().equals(product_to_add.getId())) {
+                product.setSelected_quantity(22);
+                System.out.println("------------------------------");
+            }
+        }
         basketVoFound.setProduct(list);
         service.save(basketVoFound);
         return new ResponseEntity<>("Basket is updated successfully", HttpStatus.OK);
     }
-    /*@PutMapping(value = "/api/basket/{id}")
-    public ResponseEntity<Object> updateBasket(@PathVariable(name = "id") Long basketVoId, @RequestBody BasketVo basketVo){
+    @PutMapping(value = "/api/basket/product/{id}")
+    public ResponseEntity<Object> updateBasket2(@PathVariable(name = "id") Long basketVoId, @RequestBody ProductVo productVo){
         BasketVo basketVoFound = service.getBasketById(basketVoId);
         if (basketVoFound == null)
             return new ResponseEntity<>("basket doesn't exist", HttpStatus.OK);
-        basketVo.setId(basketVoId);
-        service.save(basketVo);
+        ProductVo productFound = serviceProduct.getProductById(productVo.getId());
+        if (productFound == null)
+            return new ResponseEntity<>("basket doesn't exist", HttpStatus.OK);
+        List<Product> list = new ArrayList<>(basketVoFound.getProduct());
+        if (list.size()>0){
+            for (Product product : list) {
+                if (product.getId().equals(productFound.getId())) {
+                    list.remove(product);
+                    product.setSelected_quantity(product.getSelected_quantity()+1);
+                    list.add(product);
+                    basketVoFound.setProduct(list);
+                    service.save(basketVoFound);
+                }
+            }
+        }
         return new ResponseEntity<>("Basket is updated successfully", HttpStatus.OK);
-    }*/
+    }
     @DeleteMapping(value = "/api/basket/{id}")
     public ResponseEntity<Object> delete(@PathVariable(value = "id") Long basketVoId) {
         BasketVo basketVoFound = service.getBasketById(basketVoId);
         if (basketVoFound == null)
             return new ResponseEntity<>("basket doesn't exist", HttpStatus.OK);
-        service.delete(basketVoId);
+        List<Product> list = basketVoFound.getProduct();
+        list.removeAll(list);
+        service.save(basketVoFound);
+        //service.delete(basketVoId);
         return new ResponseEntity<>("Basket is updated successfully", HttpStatus.OK);
     }
 }

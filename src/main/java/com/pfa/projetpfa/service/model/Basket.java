@@ -19,16 +19,17 @@ public class Basket {
     private Date date;
     private int quantity;
     private float total_price;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user")
-    @JsonBackReference(value = "user-basket")
+    //@JsonBackReference(value = "user-basket")
     private User user;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     //@JoinTable(name = "basket_product", joinColumns = @JoinColumn(name = "id_basket"), inverseJoinColumns = @JoinColumn(name = "id_product"))
         //@JsonManagedReference(value = "basket-product")
     //@JsonBackReference
+    //@JsonBackReference(value = "product-basket")
     private List<Product> product = new ArrayList<Product>();
-    private boolean is_deleted;
+    private boolean isDeleted;
 
 
     public Basket() {
@@ -41,7 +42,7 @@ public class Basket {
         this.total_price = total_price;
         this.user = user;
         this.product = product;
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
 
     public void setId(long id) {
@@ -69,7 +70,7 @@ public class Basket {
     }
 
     public void setIs_deleted(boolean is_deleted) {
-        this.is_deleted = is_deleted;
+        this.isDeleted = is_deleted;
     }
 
     public long getId() {
@@ -97,6 +98,6 @@ public class Basket {
     }
 
     public boolean isIs_deleted() {
-        return is_deleted;
+        return isDeleted;
     }
 }

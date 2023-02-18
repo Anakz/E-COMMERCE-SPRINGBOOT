@@ -1,5 +1,8 @@
 package com.pfa.projetpfa.service.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -8,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Orderr")
+@JsonIgnoreProperties("hibernateLazyInitializer")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +23,13 @@ public class Order {
     private float delivery_price;
     private float total;
     private boolean isDeleted;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "id_order"), inverseJoinColumns = @JoinColumn(name = "id_product"))
+    @ManyToMany(fetch=FetchType.EAGER)
+    //@JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "id_order"), inverseJoinColumns = @JoinColumn(name = "id_product"))
+    //@JsonBackReference(value = "product-order")
     private List<Product> product = new ArrayList<>();
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "id_user")
+    @JsonBackReference(value = "user-order")
     private User user;
     @OneToOne
     @JoinColumn(name = "id_bill")

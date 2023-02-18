@@ -1,8 +1,8 @@
 package com.pfa.projetpfa.configuration;
-
+/*
 
 import com.pfa.projetpfa.jwt.AuthEntryPointJwt;
-import com.pfa.projetpfa.jwt.AuthTokenFilter;
+//import com.pfa.projetpfa.jwt.AuthTokenFilter;
 import com.pfa.projetpfa.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -63,4 +63,4 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-}
+}*/

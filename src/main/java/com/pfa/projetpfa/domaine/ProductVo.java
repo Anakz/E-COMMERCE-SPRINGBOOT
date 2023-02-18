@@ -18,6 +18,8 @@ public class ProductVo {
     private float selling_price;
     private int stock;
     private int stock_available;
+
+    private int fournisseur;
     private float weight;
     private Category category;
     private List<Basket> basket = new ArrayList<>();
@@ -29,7 +31,7 @@ public class ProductVo {
     public ProductVo() {
     }
 
-    public ProductVo(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, float weight, Category category, List<Basket> basket, List<Order> order, List<Image> images, int selected_quantity, boolean is_deleted) {
+    public ProductVo(Long id, String name, String description, float buying_price, float selling_price, int stock, int stock_available, int fournisseur, float weight, Category category, List<Basket> basket, List<Order> order, List<Image> images, int selected_quantity, boolean is_deleted) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -37,6 +39,7 @@ public class ProductVo {
         this.selling_price = selling_price;
         this.stock = stock;
         this.stock_available = stock_available;
+        this.fournisseur = fournisseur;
         this.weight = weight;
         this.category = category;
         this.basket = basket;
@@ -68,6 +71,15 @@ public class ProductVo {
         this.order = createdProduct.order;
         this.images = createdProduct.images;
         this.is_deleted = createdProduct.is_deleted;
+        this.setFournisseur(createdProduct.getFournisseur());
+    }
+
+    public int getFournisseur() {
+        return fournisseur;
+    }
+
+    public void setFournisseur(int fournisseur) {
+        this.fournisseur = fournisseur;
     }
 
     public String getName() {

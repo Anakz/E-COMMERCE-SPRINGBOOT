@@ -2,12 +2,12 @@ package com.pfa.projetpfa.service;
 
 import com.pfa.projetpfa.domaine.UserVo;
 import com.pfa.projetpfa.service.model.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
-
-public interface IUserService  extends UserDetailsService {
+//  extends UserDetailsService
+public interface IUserService{
 
     List<UserVo> getUsers();
 
@@ -28,7 +28,7 @@ public interface IUserService  extends UserDetailsService {
     //Pour le tri
     List<UserVo> sortBy(String fieldName);
 
-    UserDetails loadUserByEmail(String email);
+    //UserDetails loadUserByEmail(String email);
 
     boolean existsByEmailAndPassword(String email, String password);
     UserVo findLastCreated();

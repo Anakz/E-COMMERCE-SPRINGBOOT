@@ -24,10 +24,11 @@ public class Product {
     private int stock;
     private int stock_available;
     private float weight;
+
     @Column(columnDefinition = "integer default 0")
     private int selected_quantity;
-    /*@Column(columnDefinition = "integer default 0")
-    private int fournisseur_id;*/
+    @Column(columnDefinition = "integer default 0")
+    private int fournisseur;
     @ManyToOne
     @JsonBackReference(value = "product-category")
     //@JoinColumn(name="id_category")
@@ -35,11 +36,12 @@ public class Product {
 
     @ManyToMany(mappedBy = "product", fetch = FetchType.EAGER)
     //@JoinColumn(name = "id_basket")
-    @JsonBackReference(value = "basket-product")
+    @JsonBackReference(value = "product-basket")
     private List<Basket> basket = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "product")
+    @ManyToMany(mappedBy = "product", fetch=FetchType.EAGER)
     //@JoinColumn(name="id_order")
+    @JsonBackReference(value = "product-order")
     private List<Order> order = new ArrayList<>();
 
     @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER,cascade = CascadeType.ALL)
@@ -64,6 +66,14 @@ public class Product {
         this.order = order;
         this.images = images;
         this.isDeleted = isDeleted;
+    }
+
+    public int getFournisseur() {
+        return fournisseur;
+    }
+
+    public void setFournisseur(int fournisseur) {
+        this.fournisseur = fournisseur;
     }
 
     public String getName() {

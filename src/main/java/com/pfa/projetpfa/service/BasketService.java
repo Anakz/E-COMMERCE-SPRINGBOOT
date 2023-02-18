@@ -18,7 +18,8 @@ public class BasketService implements IBasketService , CommandLineRunner  {
 
     @Override
     public List<BasketVo> getBaskets(){
-        List<Basket> list = basketRepository.findAll();
+        //List<Basket> list = basketRepository.findAll();
+        List<Basket> list = basketRepository.findByIsDeletedFalse();
         return BasketConverter.toListVo(list);
     }
 

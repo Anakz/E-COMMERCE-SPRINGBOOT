@@ -1,5 +1,6 @@
 package com.pfa.projetpfa.service.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -27,12 +28,13 @@ public class User {
     @OneToOne
     @JoinColumn(name = "id_user")
     private Payment payment;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     //@JoinColumn(name = "id_order")
+    @JsonBackReference(value = "user-order")
     private List<Order> order = new ArrayList<>();
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_basket")
-    @JsonManagedReference(value = "user-basket")
+    @JsonBackReference(value = "user-basket")
     private Basket basket;
 
     public List<Order> getOrder() {
