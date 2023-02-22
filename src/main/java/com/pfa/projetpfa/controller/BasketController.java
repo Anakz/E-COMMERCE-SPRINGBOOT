@@ -88,15 +88,54 @@ public class BasketController {
         if (productFound == null)
             return new ResponseEntity<>("basket doesn't exist", HttpStatus.OK);
         List<Product> list = new ArrayList<>(basketVoFound.getProduct());
+        boolean b = false;
+        Product product = new Product();
         if (list.size()>0){
-            for (Product product : list) {
-                if (product.getId().equals(productFound.getId())) {
-                    list.remove(product);
-                    product.setSelected_quantity(product.getSelected_quantity()+1);
-                    list.add(product);
-                    basketVoFound.setProduct(list);
-                    service.save(basketVoFound);
+            for (Product product_ : list) {
+                if (product_.getId().equals(productFound.getId())) {
+                    product = product_;
+                    b = true;
                 }
+            }
+            if (b)
+            {
+                list.remove(product);
+                product.setSelected_quantity(product.getSelected_quantity()+1);
+                list.add(product);
+                basketVoFound.setProduct(list);
+                service.save(basketVoFound);
+            }
+        }
+        return new ResponseEntity<>("Basket is updated successfully", HttpStatus.OK);
+    }
+    @PutMapping(value = "/api/basket/deleteproduct/{id}")
+    public ResponseEntity<Object> updateBasket3(@PathVariable(name = "id") Long basketVoId, @RequestBody Long productVoId){
+        BasketVo basketVoFound = service.getBasketById(basketVoId);
+        if (basketVoFound == null)
+            return new ResponseEntity<>("basket doesn't exist", HttpStatus.OK);
+        ProductVo productFound = serviceProduct.getProductById(productVoId);
+        if (productFound == null)
+            return new ResponseEntity<>("basket doesn't exist", HttpStatus.OK);
+        List<Product> list = new ArrayList<>(basketVoFound.getProduct());
+        boolean b = false;
+        Product product = new Product();
+        if (list.size()>0){
+            for (Product product_ : list) {
+                if (product_.getId().equals(productFound.getId())) {
+                    product = product_;
+                    b=true;
+                }
+            }
+            if (b)
+            {
+                list.remove(product);
+                if (product.getSelected_quantity() > 1)
+                {
+                    product.setSelected_quantity(product.getSelected_quantity()-1);
+                    list.add(product);
+                }
+                basketVoFound.setProduct(list);
+                service.save(basketVoFound);
             }
         }
         return new ResponseEntity<>("Basket is updated successfully", HttpStatus.OK);

@@ -50,6 +50,8 @@ public class ProductController {
         if (productVoFound == null)
             return new ResponseEntity<>("Product doesn't exist", HttpStatus.OK);
         productVo.setId(productVoId);
+        productVo.setCategory(productVoFound.getCategory());
+        productVo.setImages(productVoFound.getImages());
         service.save(productVo);
         return new ResponseEntity<>("Product updated successfully", HttpStatus.OK);
     }

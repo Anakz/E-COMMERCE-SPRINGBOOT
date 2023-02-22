@@ -3,6 +3,8 @@ package com.pfa.projetpfa.controller;
 import com.pfa.projetpfa.domaine.OrderVo;
 import com.pfa.projetpfa.domaine.ProductVo;
 import com.pfa.projetpfa.service.IOrderService;
+import com.pfa.projetpfa.service.IProductService;
+import com.pfa.projetpfa.service.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +20,8 @@ public class OrderController {
 
     @Autowired
     private IOrderService service;
+    @Autowired
+    private IProductService serviceProduct;
 
     @GetMapping(value = "/api/order", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<OrderVo> getAll(){
@@ -32,6 +36,13 @@ public class OrderController {
     }
     @PostMapping(value = "/api/order")
     public ResponseEntity<Object> createOrder(@Validated @RequestBody OrderVo orderVo) {
+        List<Product> list = orderVo.getProduct();
+        for (Product prod: list) {
+            ProductVo productVoFound = serviceProduct.getProductById(prod.getId());
+            prod.setImages(productVoFound.getImages());
+            prod.setCategory(productVoFound.getCategory());
+        }
+        orderVo.setProduct(list);
         OrderVo createdOrder =  service.save(orderVo);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }

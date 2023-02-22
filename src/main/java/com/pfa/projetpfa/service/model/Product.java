@@ -68,6 +68,7 @@ public class Product {
         this.isDeleted = isDeleted;
     }
 
+
     public int getFournisseur() {
         return fournisseur;
     }
